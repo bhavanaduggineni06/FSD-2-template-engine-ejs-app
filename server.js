@@ -11,11 +11,8 @@ import {
 } from "./controllers/productController.js";
 
 import dotenv from "dotenv";
-import connectDB from "./config/db.js";
 
 dotenv.config();
-
-await connectDB(process.env.MONGO_URI, process.env.DB_NAME);
 
 const app = express();
 
@@ -29,8 +26,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/product-form", createProductForm);
 app.post("/add-product", createProduct);
-
-app.get("/", readProducts);
+app.get("/", (req, res) => {
+    res.send("Template Engine EJS App is Running!");
+});
 app.get("/product/:id", readProductById);
 
 app.get("/product-form/:id", updateProductForm);
